@@ -2,15 +2,15 @@ FROM php:8.2-cli
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y \
+    git curl zip unzip libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 COPY . .
 
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip
-
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
-
-RUN composer install
+RUN composer install --no-dev --optimize-autoloader
 
 EXPOSE 10000
 
