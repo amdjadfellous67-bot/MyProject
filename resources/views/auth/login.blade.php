@@ -648,6 +648,19 @@
     </div>
 
     <script>
+    @if(session('error'))
+        window.addEventListener('DOMContentLoaded', function() {
+            showToast('{{ session('error') }}', 'error');
+        });
+    @endif
+    @if(session('success'))
+        window.addEventListener('DOMContentLoaded', function() {
+            showToast('{{ session('success') }}', 'success');
+        });
+    @endif
+    </script>
+
+    <script>
     (function() {
         'use strict';
 
